@@ -135,42 +135,223 @@
 
 
     <h2>Student Registration Form</h2>
-    <form name="studentForm">
-        <label for="name">Student Name:</label><br />
-        <input type="text" id="name" name="name" ng-model="student.name" required /><br /><br />
+    <form name="studentForm" novalidate>
 
-        <label for="email">Email:</label><br />
-        <input type="email" id="email" name="email" ng-model="student.email" required /><br /><br />
+        <label>Student Name</label>
+        <br>
+        <br>
 
-        <label for="phone">Phone:</label><br />
-        <input type="tel" id="phone" name="phone" ng-model="student.phone" required /><br /><br />
+        <input type="text" name="studentName" ng-model="student.name" required ng-minlength="3" ng-maxlength="20">
 
-        <label for="age">Age:</label><br />
-        <input type="number" id="age" name="age" ng-model="student.age" required /><br /><br />
+        <p ng-show="studentForm.studentName.$touched && studentForm.studentName.$error.required" style="color:red;">
 
-        <label for="department">Department:</label><br />
-        <input type="text" id="department" name="department" ng-model="student.department" required /><br /><br />
+            Student Name is required
 
-        <label for="gender">Gender:</label><br />
-        <input type="text" id="gender" name="gender" ng-model="student.gender" required /><br /><br />
+        </p>
 
-        <label for="address">Address:</label><br />
-        <input type="text" id="address" name="address" ng-model="student.address" required /><br /><br />
+        <p ng-show="studentForm.studentName.$touched && studentForm.studentName.$error.minlength" style="color:red;">
 
-        <button type="submit" ng-disabled="studentForm.$invalid">
-            Register Student
-        </button>
+            Student Name must be at least 3 characters
+
+        </p>
+
+        <p ng-show="studentForm.studentName.$touched && studentForm.studentName.$error.maxlength" style="color:red;">
+
+            Student Name must be at most 20 characters
+
+        </p>
+
+        <br>
+        <br>
+        <label>Email</label>
+        <br>
+
+        <input type="email" name="studentEmail" ng-model="student.email" required>
+
+        <p ng-show="studentForm.studentEmail.$touched &&
+             studentForm.studentEmail.$error.required" style="color:red;">
+
+            Email is required
+
+        </p>
+
+        <p ng-show="studentForm.studentEmail.$touched &&
+             studentForm.studentEmail.$error.email" style="color:red;">
+
+            Enter a valid email address
+
+        </p>
+
+        <br><br>
+        <label>Phone</label><br>
+
+        <input type="number" name="studentPhone" ng-model="student.phone" required ng-minlength="3" ng-maxlength="20"
+            ng-pattern="/^[0-9]+$/">
+
+        <p ng-show="studentForm.studentPhone.$touched && studentForm.studentPhone.$error.required" style="color:red;">
+
+            Phone is required
+
+        </p>
+
+        <p ng-show="studentForm.studentPhone.$touched && studentForm.studentPhone.$error.minlength" style="color:red;">
+
+            Phone must be at least 3 characters
+
+        </p>
+
+        <p ng-show="studentForm.studentPhone.$touched && studentForm.studentPhone.$error.maxlength" style="color:red;">
+
+            Phone must be at most 20 characters
+
+        </p>
+
+        <p ng-show="studentForm.studentPhone.$touched && studentForm.studentPhone.$error.pattern" style="color:red;">
+
+            Phone must contain only digits
+
+        </p>
+
+        <br>
+        <br>
+        <label>Gender</label><br>
+
+        <select name="studentGender" ng-model="student.gender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <p ng-show="studentForm.studentGender.$touched && studentForm.studentGender.$error.required" style="color:red;">
+
+            Gender is required
+
+        </p>
+
+        <br><br>
+
+        <label>Address</label><br>
+
+        <input type="text" name="studentAddress" ng-model="student.address" required ng-minlength="5" ng-maxlength="100"
+            ng-pattern="/^[a-zA-Z0-9 ,./#&-]+$/">
+
+        <p ng-show="studentForm.studentAddress.$touched && studentForm.studentAddress.$error.required"
+            style="color:red;">
+
+            Address is required
+
+        </p>
+
+        <p ng-show="studentForm.studentAddress.$touched && studentForm.studentAddress.$error.minlength"
+            style="color:red;">
+
+            Address must be at least 5 characters
+
+        </p>
+
+        <p ng-show="studentForm.studentAddress.$touched && studentForm.studentAddress.$error.maxlength"
+            style="color:red;">
+
+            Address must be at most 100 characters
+
+        </p>
+
+        <p ng-show="studentForm.studentAddress.$touched && studentForm.studentAddress.$error.pattern"
+            style="color:red;">
+
+            Address can contain letters, numbers, and special characters only
+
+        </p>
+
+        <br><br>
+
+        <label>Age</label><br>
+
+        <input type="number" name="studentAge" ng-model="student.age" required min="18">
+
+        <p ng-show="studentForm.studentAge.$touched && studentForm.studentAge.$error.required" style="color:red;">
+
+            Age is required
+
+        </p>
+
+        <p ng-show="studentForm.studentAge.$touched && studentForm.studentAge.$error.min" style="color:red;">
+
+            Age must be 18 or above. Not eligible
+
+        </p>
+
+        <br><br>
+
+        <label>Department</label><br>
+
+        <select name="studentDepartment" ng-model="student.department"
+            ng-options="department for department in departments" required>
+            <option value="">Select Department</option>
+        </select>
+
+        <p ng-show="studentForm.studentDepartment.$touched && studentForm.studentDepartment.$error.required"
+            style="color:red;">
+
+            Department is required
+
+        </p>
+
+        <br><br>
+
+        <button>Register student</button>
+
+
     </form>
 
-    <hr />
 
-    <h2>Form Status</h2>
-    <p>Valid: {{studentForm.$valid}}</p>
-    <p>Invalid: {{studentForm.$invalid}}</p>
-    <p>Pristine: {{studentForm.$pristine}}</p>
-    <p>Dirty: {{studentForm.$dirty}}</p>
-    <p ng-show="studentForm.$touched && studentForm.$invalid" style="color: red">
-        Please fill in all required fields correctly.
+    <hr>
+    <br><br>
+
+    <h2>form status</h2>
+
+    <p>
+        valid : {{studentForm.$valid}}
+
+    </p>
+
+
+    <p>
+
+        invalid : {{studentForm.$invalid}}
+    </p>
+
+    <p>
+
+        pristine : {{studentForm.$pristine}}
+    </p>
+
+    <p>
+        dirty : {{studentForm.$dirty}}
+
+    </p>
+
+    <p>
+        student name touched : {{studentForm.studentName.$touched}}
+
+    </p>
+
+
+    <p>
+
+        student name valid : {{studentForm.studentName.$valid}}
+    </p>
+
+
+    <p>
+        student name invalid : {{studentForm.studentName.$invalid}}
+
+    </p>
+
+    <p>student name error required : {{studentForm.studentName.$error.required}}
+
+
     </p>
 </body>
 
